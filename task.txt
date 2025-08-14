@@ -1,0 +1,60 @@
+You’re going to make an API + redirect service like bit.ly.
+Input: Long URL (e.g., https://example.com/blog/article?id=123)
+Output: Short URL (e.g., http://localhost:8080/xyz12)
+Extra: Visiting /xyz12 will take you to the original link.
+
+🧑‍💻 Create url_shrtr table ✅
+
+🧑‍💻 1. Create Short URL ✅
+Method: POST
+Endpoint: /api/shorten
+ ----body----
+{
+  "original_url": "https://example.com/very/long/path"
+}
+---- resp----
+{
+  "short_url": "https://short.ly/abc123"
+}
+
+
+🧑‍💻 2. Redirect to Original URL
+Method: GET
+Endpoint: /{shortCode}
+Example: GET /abc123 → redirects to https://example.com/very/long/path
+Purpose: When someone visits the short URL, send them to the original URL.
+
+🧑‍💻 3. Get All Shortened URLs (optional for admin or dashboard)
+Method: GET
+Endpoint: /api/urls
+----resp----
+[
+  {
+    "short_code": "abc123",
+    "original_url": "https://example.com",
+    "clicks": 42
+  }
+]
+
+🧑‍💻 4. Get URL Details
+Method: GET
+Endpoint: /api/urls/{shortCode}
+----resp----
+{
+  "short_code": "abc123",
+  "original_url": "https://example.com",
+  "clicks": 42,
+  "created_at": "2025-08-14T12:00:00Z"
+}
+
+🧑‍💻 5. Update Original URL (optional)
+Method: PUT
+Endpoint: /api/urls/{shortCode}
+----body----
+{
+  "original_url": "https://new-link.com"
+}
+
+🧑‍💻 6. Delete Shortened URL (optional)
+Method: DELETE
+Endpoint: /api/urls/{shortCode}
